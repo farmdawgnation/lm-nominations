@@ -1,0 +1,13 @@
+{
+  "name": "leadership-macon-nominations",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "2.5.8",
+    "jqtpl": ">= 0.0.1",
+    "jake": ">= 0.2.32",
+    "minimatch": ">= 0.2.4",
+    "mongoose": ">= 2.5.13",
+    "connect-mongo": ">= 0.1.7"
+  }
+}
