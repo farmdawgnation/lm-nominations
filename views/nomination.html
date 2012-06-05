@@ -11,7 +11,7 @@
     <div class="control-group">
       <label class="control-label" for="nominee_salutation">Salutation</label>
       <div class="controls">
-        <select name="nominee[salutation]" id="nominee_salutation">
+        <select name="nomination[nominee][salutation]" id="nominee_salutation">
           <option value="mr">Mr.</option>
           <option value="ms">Ms.</option>
           <option value="mrs">Mrs.</option>
@@ -22,70 +22,70 @@
     <div class="control-group">
       <label class="control-label" for="nominee_first_name">First Name</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominee_first_name" name="nominee[first_name]">
+        <input type="text" class="input-xxlarge" id="nominee_first_name" name="nomination[nominee][first_name]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_middle_name">Middle Name</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominee_middle_name" name="nominee[middle_name]">
+        <input type="text" class="input-xxlarge" id="nominee_middle_name" name="nomination[nominee][middle_name]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_first_name">Last Name</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominee_last_name" name="nominee[last_name]">
+        <input type="text" class="input-xxlarge" id="nominee_last_name" name="nomination[nominee][last_name]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_suffix">Suffix (i.e. JR)</label>
       <div class="controls">
-        <input type="text" class="input-small" id="nominee_suffix" name="nominee[suffix]">
+        <input type="text" class="input-small" id="nominee_suffix" name="nomination[nominee][suffix]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_organization">Organization</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominee_organization" name="nominee[organization]">
+        <input type="text" class="input-xxlarge" id="nominee_organization" name="nomination[nominee][organization]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_email">Email</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominee_email" name="nominee[email]">
+        <input type="text" class="input-xxlarge" id="nominee_email" name="nomination[nominee][email]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_street_address">Street Address</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominee_street_address" name="nominee[street_address]">
+        <input type="text" class="input-xxlarge" id="nominee_street_address" name="nomination[nominee][street_address]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_city">City</label>
       <div class="controls">
-        <input type="text" class="input-xlarge" id="nominee_city" name="nominee[city]">
+        <input type="text" class="input-xlarge" id="nominee_city" name="nomination[nominee][city]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_state">State</label>
       <div class="controls">
-        <input type="text" class="input-small" id="nominee_state" name="nominee[state]" value="GA" disabled="true">
+        <input type="text" class="input-small" id="nominee_state" name="nomination[nominee][state]" value="GA" disabled="true">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_zip">ZIP</label>
       <div class="controls">
-        <input type="text" class="input-small" id="nominee_zip" name="nominee[zip]">
+        <input type="text" class="input-small" id="nominee_zip" name="nomination[nominee][zip]">
       </div>
     </div>
   </fieldset>
@@ -95,7 +95,7 @@
     <div class="control-group">
       <label class="control-label" for="nominator_name">Your Name</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominator_name" name="nominator[name]">
+        <input type="text" class="input-xxlarge" id="nominator_name" name="nomination[nominator][name]">
         <p class="help-block">Enter your first and last name.</p>
       </div>
     </div>
@@ -103,21 +103,21 @@
     <div class="control-group">
       <label class="control-label" for="nominator_organization">Your Organization</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominator_organization" name="nominator[organization]">
+        <input type="text" class="input-xxlarge" id="nominator_organization" name="nomination[nominator][organization]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominator_name">Your Email</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominator_email" name="nominator[email]">
+        <input type="text" class="input-xxlarge" id="nominator_email" name="nomination[nominator][email]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominator_name">Your Phone</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nominator_phone" name="nominator[phone]">
+        <input type="text" class="input-xxlarge" id="nominator_phone" name="nomination[nominator][phone]">
       </div>
     </div>
   </fieldset>
@@ -127,28 +127,28 @@
     <div class="control-group">
       <label class="control-label" for="nominator_reason">I am nominating this person because.</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="nomination_reason" name="nomination_reason">
+        <input type="text" class="input-xxlarge" id="nomination_reason" name="nomination[nomination_reason]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="good_leader_reason">I feel this person will be a good leader because.</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="good_leader_reason" name="good_leader_reason">
+        <input type="text" class="input-xxlarge" id="good_leader_reason" name="nomination[good_leader_reason]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="num_years_known">How many years have you known each other?</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="num_years_known" name="num_years_known">
+        <input type="text" class="input-xxlarge" id="num_years_known" name="nomination[num_years_known]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="personally_observed_leadership">I have personally observed this nominee's leadership skills.</label>
       <div class="controls">
-        <select name="personally_observed_leadership">
+        <select name="nomination[personally_observed_leadership]">
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
@@ -158,14 +158,14 @@
     <div class="control-group">
       <label class="control-label" for="leadership_skills_observed">If you answered yes above, what leadership skills have you observed?</label>
       <div class="controls">
-        <input type="text" class="input-xxlarge" id="leadership_skills_observed" name="leadership_skills_observed">
+        <input type="text" class="input-xxlarge" id="leadership_skills_observed" name="nomination[leadership_skills_observed]">
       </div>
     </div>
 
     <div class="control-group">
       <label class="control-label" for="nominee_notified">I have notified the nominee about their nomination.</label>
       <div class="controls">
-        <select name="nominee_notified">
+        <select name="nomination[nominee_notified]">
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
