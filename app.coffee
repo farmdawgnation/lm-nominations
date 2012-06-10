@@ -26,7 +26,6 @@ app.configure 'production', () ->
 
 # Routes
 app.get '/', routes.index
-app.get '/nomination', routes.nomination
 app.post '/submit', routes.submit
 
 app.listen 3000

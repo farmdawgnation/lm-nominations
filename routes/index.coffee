@@ -7,10 +7,7 @@ emailTransport = nodemailer.createTransport "SES",
   AWSSecretKey: process.env.AWSSECRETKEY
 
 exports.index = (req, res) ->
-  res.render 'index', { title: 'Express' }
-
-exports.nomination = (req, res) ->
-  res.render 'nomination', {title: "Nomination"}
+  res.render 'nomination', { title: 'Nomination' }
 
 exports.submit = (req, res) ->
   new_nomination = new Nomination req.body.nomination
@@ -51,7 +48,7 @@ exports.submit = (req, res) ->
           console.log(emailError.message)
       ###
 
-      res.redirect "/nomination"
+      res.redirect "/"
     else
       console.log(err)
-      res.redirect "/nomination"
+      res.redirect "/"
