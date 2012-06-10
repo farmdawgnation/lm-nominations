@@ -18,9 +18,11 @@ exports.submit = (req, res) ->
   new_nomination.save (err) ->
     unless err
       emailTransport.sendMail {
-        from: 'Leadership Macon <matt.foxtrot@gmail.com>',
+        from: 'Leadership Macon <nominations@leadershipmacon.org>',
+        replyTo: 'Lynn Farmer <lfarmer@maconchamber.org>',
         to: 'Nominator <matt.foxtrot@gmail.com>',
         subject: 'Thank you for your nomination.',
+        generateTextFromHTML: true,
         text: 'Test message.'
       }, (emailError) ->
         if (emailError)
