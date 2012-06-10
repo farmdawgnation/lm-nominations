@@ -13,21 +13,31 @@ exports.nomination = (req, res) ->
   res.render 'nomination', {title: "Nomination"}
 
 exports.submit = (req, res) ->
-  console.log req.body.nomination
   new_nomination = new Nomination req.body.nomination
   new_nomination.save (err) ->
     unless err
-      emailTransport.sendMail {
-        from: 'Leadership Macon <nominations@leadershipmacon.org>',
-        replyTo: 'Lynn Farmer <lfarmer@maconchamber.org>',
-        to: 'Nominator <matt.foxtrot@gmail.com>',
-        subject: 'Thank you for your nomination.',
-        generateTextFromHTML: true,
-        text: 'Test message.'
-      }, (emailError) ->
-        if (emailError)
-          console.log("Email error occured")
-          console.log(emailError.message)
+      nominator = new_nomination.nominator.name
+      nominee = new_nomination.nominee.first_name + " " + new_nomination.nominee.last_name
+
+      res.render 'nomthanksemail', {
+        layout: false,
+        nominator: nominator,
+        nominee: nominee
+      }, (templateErr, emailHtml) ->
+        if ! templateErr
+          emailTransport.sendMail {
+            from: 'Leadership Macon <nominations@leadershipmacon.org>',
+            replyTo: 'Lynn Farmer <lfarmer@maconchamber.org>',
+            to: 'Nominator <matt.foxtrot@gmail.com>',
+            subject: 'Thank you for your nomination.',
+            generateTextFromHTML: true,
+            html: emailHtml
+          }, (emailError) ->
+            if (emailError)
+              console.log("Email error occured")
+              console.log(emailError.message)
+        else
+          console.log templateErr
 
       ###
       emailTransport.sendMail {
