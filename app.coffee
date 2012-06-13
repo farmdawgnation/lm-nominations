@@ -3,6 +3,7 @@ require './model/Nomination'
 routes = require './routes'
 jqtpl = require 'jqtpl'
 mongoose = require 'mongoose'
+MongoStore = require('connect-mongo')
 
 app = module.exports = express.createServer()
 
@@ -12,10 +13,13 @@ app.configure () ->
   app.set 'view engine', 'html'
   app.register '.html', jqtpl.express
   app.use express.bodyParser()
+  app.use express.cookieParser()
   app.use express.methodOverride()
+  mongoose.connect "mongodb://localhost/leadership-macon-nominations"
+  app.use express.session({ secret: "wakkwakkawakka123", store: new MongoStore({ db: "leadership-macon-nominations" }) })
   app.use app.router
   app.use express.static(__dirname + '/public')
-  mongoose.connect "mongodb://localhost/leadership-macon-nominations"
+
 
 
 app.configure 'development', () ->

@@ -7,7 +7,11 @@ emailTransport = nodemailer.createTransport "SES",
   AWSSecretKey: process.env.AWSSECRETKEY
 
 exports.index = (req, res) ->
-  res.render 'nomination', { title: 'Nomination' }
+  res.render 'nomination', {
+    title: 'Nomination',
+    success: req.flash("success"),
+    error: req.flash("error")
+  }
 
 exports.submit = (req, res) ->
   new_nomination = new Nomination req.body.nomination
@@ -31,9 +35,10 @@ exports.submit = (req, res) ->
             html: emailHtml
           }, (emailError) ->
             if (emailError)
-              console.log("Email error occured")
+              req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
               console.log(emailError.message)
         else
+          req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
           console.log templateErr
 
       ###
@@ -44,11 +49,17 @@ exports.submit = (req, res) ->
         text: 'Test message.'
       }, (emailError) ->
         if (emailError)
-          console.log("Email error occured.")
+          console.log("Error occured generating notification email to LM.")
           console.log(emailError.message)
       ###
 
+      req.flash "success", "Your nomination was successfully submitted."
       res.redirect "/"
     else
-      console.log(err)
-      res.redirect "/"
+      req.flash "error", err
+      res.render 'nomination', {
+        nomination: new_nomination,
+        title: "Nomination",
+        success: req.flash("success"),
+        error: req.flash("error")
+      }

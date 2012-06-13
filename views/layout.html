@@ -10,6 +10,20 @@
     <div class="container">
       <div class="row">
         <div class="span12">
+          {{if success != ""}}
+            <div class="alert alert-success">
+              ${success}
+            </div>
+          {{/if}}
+          {{if error != ""}}
+            <div class="alert alert-error">
+              ${error}
+            </div>
+          {{/if}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12">
           {{html body}}
         </div>
       </div>
