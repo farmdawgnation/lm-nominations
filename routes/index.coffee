@@ -18,6 +18,7 @@ exports.submit = (req, res) ->
   new_nomination.save (err) ->
     unless err
       nominator = new_nomination.nominator.name
+      nominator_mailing_address = nominator + " <" + new_nomination.nominator.email + ">"
       nominee = new_nomination.nominee.first_name + " " + new_nomination.nominee.last_name
 
       res.render 'nomthanksemail', {
@@ -29,7 +30,7 @@ exports.submit = (req, res) ->
           emailTransport.sendMail {
             from: 'Leadership Macon <nominations@leadershipmacon.org>',
             replyTo: 'Lynn Farmer <lfarmer@maconchamber.org>',
-            to: 'Nominator <matt.foxtrot@gmail.com>',
+            to: nominator_mailing_address,
             subject: 'Thank you for your nomination.',
             generateTextFromHTML: true,
             html: emailHtml
@@ -41,17 +42,15 @@ exports.submit = (req, res) ->
           req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
           console.log templateErr
 
-      ###
       emailTransport.sendMail {
         from: 'Leadership Macon <noreply@nominate.leadershipmacon.org>',
         to: 'Leadership Macon <matt.foxtrot@gmail.com>',
-        subject: 'Nomination Notification',
-        text: 'Test message.'
+        subject: 'New Nomination: ' + nominee,
+        text: "A new nomination has been recorded in the database for " + nominee + ". This person was nominated by " + nominator + "."
       }, (emailError) ->
         if (emailError)
           console.log("Error occured generating notification email to LM.")
           console.log(emailError.message)
-      ###
 
       req.flash "success", "Your nomination was successfully submitted."
       res.redirect "/"
