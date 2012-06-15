@@ -3,8 +3,8 @@ Nomination = mongoose.model("Nomination")
 nodemailer = require 'nodemailer'
 
 emailTransport = nodemailer.createTransport "SES",
-  AWSAccessKeyID: process.env.AWSACCESSKEY,
-  AWSSecretKey: process.env.AWSSECRETKEY
+  AWSAccessKeyID: process.env.AWS_ACCESSKEY,
+  AWSSecretKey: process.env.AWS_SECRETKEY
 
 exports.index = (req, res) ->
   res.render 'nomination', {
@@ -12,7 +12,8 @@ exports.index = (req, res) ->
     success: req.flash("success"),
     error: req.flash("error"),
     nomination: new Nomination(),
-    validations: {}
+    validations: {},
+    recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY}
   }
 
 exports.submit = (req, res) ->
@@ -63,5 +64,6 @@ exports.submit = (req, res) ->
         title: "Nomination",
         success: req.flash("success"),
         error: req.flash("error"),
-        validations: err.errors
+        validations: err.errors,
+        recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY}
       }
