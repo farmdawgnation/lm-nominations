@@ -10,7 +10,9 @@ exports.index = (req, res) ->
   res.render 'nomination', {
     title: 'Nomination',
     success: req.flash("success"),
-    error: req.flash("error")
+    error: req.flash("error"),
+    nomination: new Nomination(),
+    validations: {}
   }
 
 exports.submit = (req, res) ->
@@ -55,10 +57,11 @@ exports.submit = (req, res) ->
       req.flash "success", "Your nomination was successfully submitted."
       res.redirect "/"
     else
-      req.flash "error", err
+      console.log err
       res.render 'nomination', {
         nomination: new_nomination,
         title: "Nomination",
         success: req.flash("success"),
-        error: req.flash("error")
+        error: req.flash("error"),
+        validations: err.errors
       }
