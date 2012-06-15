@@ -6,16 +6,23 @@ emailTransport = nodemailer.createTransport "SES",
   AWSAccessKeyID: process.env.AWS_ACCESSKEY,
   AWSSecretKey: process.env.AWS_SECRETKEY
 
-# GET /
-exports.index = (req, res) ->
-  res.render 'nomination', {
-    title: 'Nomination',
+# Build out the object we're going to pass to the renderer
+buildRendererParams = (req, additionalParamsObject) ->
+  returnObject = {
     success: req.flash("success"),
     error: req.flash("error"),
+    recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY},
     nomination: new Nomination(),
-    validations: {},
-    recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY}
+    validations: {}
   }
+
+  returnObject[key] = value for value, key in additionalParamsObject
+
+  returnObject
+
+# GET /
+exports.index = (req, res) ->
+  res.render 'nomination', buildRendererParams(req, {})
 
 # POST /submit
 exports.submit = (req, res) ->
@@ -69,11 +76,7 @@ exports.submit = (req, res) ->
       req.flash "success", "Your nomination was successfully submitted."
       res.redirect "/"
     else
-      res.render 'nomination', {
+      res.render 'nomination', buildRendererParams(req, {
         nomination: new_nomination,
-        title: "Nomination",
-        success: req.flash("success"),
-        error: req.flash("error"),
-        validations: saveErr.errors,
-        recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY}
-      }
+        validations: saveErr.errors
+      })
