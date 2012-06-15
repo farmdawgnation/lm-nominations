@@ -6,6 +6,7 @@ emailTransport = nodemailer.createTransport "SES",
   AWSAccessKeyID: process.env.AWS_ACCESSKEY,
   AWSSecretKey: process.env.AWS_SECRETKEY
 
+# GET /
 exports.index = (req, res) ->
   res.render 'nomination', {
     title: 'Nomination',
@@ -16,14 +17,21 @@ exports.index = (req, res) ->
     recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY}
   }
 
+# POST /submit
 exports.submit = (req, res) ->
+  # Create the Nomination object from the input.
   new_nomination = new Nomination req.body.nomination
-  new_nomination.save (err) ->
-    unless err
+
+  # Attempt to save the nomination object in the DB.
+  new_nomination.save (saveErr) ->
+    unless saveErr
+      # Send notification emails to the nominator
       nominator = new_nomination.nominator.name
       nominator_mailing_address = nominator + " <" + new_nomination.nominator.email + ">"
       nominee = new_nomination.nominee.first_name + " " + new_nomination.nominee.last_name
 
+      # Send the thank you email to the person who created
+      # the nomination.
       res.render 'nomthanksemail', {
         layout: false,
         nominator: nominator,
@@ -45,6 +53,8 @@ exports.submit = (req, res) ->
           req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
           console.log templateErr
 
+      # Send an email to Leadership Macon notifying them
+      # of the new nomination.
       emailTransport.sendMail {
         from: 'Leadership Macon <noreply@nominate.leadershipmacon.org>',
         to: 'Leadership Macon <matt.foxtrot@gmail.com>',
@@ -55,15 +65,15 @@ exports.submit = (req, res) ->
           console.log("Error occured generating notification email to LM.")
           console.log(emailError.message)
 
+      # Notify the user the email was successful.
       req.flash "success", "Your nomination was successfully submitted."
       res.redirect "/"
     else
-      console.log err
       res.render 'nomination', {
         nomination: new_nomination,
         title: "Nomination",
         success: req.flash("success"),
         error: req.flash("error"),
-        validations: err.errors,
+        validations: saveErr.errors,
         recaptcha: {public_key: process.env.RECAPTCHA_PUBLIC_KEY}
       }
