@@ -1,6 +1,8 @@
 mongoose = require 'mongoose'
 Nomination = mongoose.model("Nomination")
 nodemailer = require 'nodemailer'
+$ = require "jQuery"
+XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 
 emailTransport = nodemailer.createTransport "SES",
   AWSAccessKeyID: process.env.AWS_ACCESSKEY,
@@ -26,57 +28,80 @@ exports.index = (req, res) ->
 
 # POST /submit
 exports.submit = (req, res) ->
+  # Workaround for the Same Origin Policy being enforced
+  # by jQuery. This allows us to do our ReCAPTCHA API call
+  # using the uber sexy $.ajax syntax.
+  $.support.cors = true;
+  $.ajaxSettings.xhr = () ->
+      return new XMLHttpRequest
+
   # Create the Nomination object from the input.
   new_nomination = new Nomination req.body.nomination
 
-  # Attempt to save the nomination object in the DB.
-  new_nomination.save (saveErr) ->
-    unless saveErr
-      # Send notification emails to the nominator
-      nominator = new_nomination.nominator.name
-      nominator_mailing_address = nominator + " <" + new_nomination.nominator.email + ">"
-      nominee = new_nomination.nominee.first_name + " " + new_nomination.nominee.last_name
+  $.ajax
+    url: "http://www.google.com/recaptcha/api/verify"
+    type: "post"
+    dataType: "text"
+    data: {
+      privatekey: process.env.RECAPTCHA_PRIVATE_KEY,
+      remoteip: req.headers['X-Real-IP'] || "127.0.0.1",
+      challenge: req.body.recaptcha_challenge_field,
+      response: req.body.recaptcha_response_field
+    }
+    success: (data) ->
+      # Attempt to save the nomination object in the DB.
+      new_nomination.save (saveErr) ->
+        unless saveErr
+          # Send notification emails to the nominator
+          nominator = new_nomination.nominator.name
+          nominator_mailing_address = nominator + " <" + new_nomination.nominator.email + ">"
+          nominee = new_nomination.nominee.first_name + " " + new_nomination.nominee.last_name
 
-      # Send the thank you email to the person who created
-      # the nomination.
-      res.render 'nomthanksemail', {
-        layout: false,
-        nominator: nominator,
-        nominee: nominee
-      }, (templateErr, emailHtml) ->
-        if ! templateErr
+          # Send the thank you email to the person who created
+          # the nomination.
+          res.render 'nomthanksemail', {
+            layout: false,
+            nominator: nominator,
+            nominee: nominee
+          }, (templateErr, emailHtml) ->
+            if ! templateErr
+              emailTransport.sendMail {
+                from: 'Leadership Macon <nominations@leadershipmacon.org>',
+                replyTo: 'Lynn Farmer <lfarmer@maconchamber.org>',
+                to: nominator_mailing_address,
+                subject: 'Thank you for your nomination.',
+                generateTextFromHTML: true,
+                html: emailHtml
+              }, (emailError) ->
+                if (emailError)
+                  req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
+                  console.log(emailError.message)
+            else
+              req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
+              console.log templateErr
+
+          # Send an email to Leadership Macon notifying them
+          # of the new nomination.
           emailTransport.sendMail {
-            from: 'Leadership Macon <nominations@leadershipmacon.org>',
-            replyTo: 'Lynn Farmer <lfarmer@maconchamber.org>',
-            to: nominator_mailing_address,
-            subject: 'Thank you for your nomination.',
-            generateTextFromHTML: true,
-            html: emailHtml
+            from: 'Leadership Macon <noreply@nominate.leadershipmacon.org>',
+            to: 'Leadership Macon <matt.foxtrot@gmail.com>',
+            subject: 'New Nomination: ' + nominee,
+            text: "A new nomination has been recorded in the database for " + nominee + ". This person was nominated by " + nominator + "."
           }, (emailError) ->
             if (emailError)
-              req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
+              console.log("Error occured generating notification email to LM.")
               console.log(emailError.message)
+
+          # Notify the user the email was successful.
+          req.flash "success", "Your nomination was successfully submitted."
+          res.redirect "/"
         else
-          req.flash "error", "A problem occured delivering your confirmation email. This error has been logged. Your nomination was still recorded."
-          console.log templateErr
-
-      # Send an email to Leadership Macon notifying them
-      # of the new nomination.
-      emailTransport.sendMail {
-        from: 'Leadership Macon <noreply@nominate.leadershipmacon.org>',
-        to: 'Leadership Macon <matt.foxtrot@gmail.com>',
-        subject: 'New Nomination: ' + nominee,
-        text: "A new nomination has been recorded in the database for " + nominee + ". This person was nominated by " + nominator + "."
-      }, (emailError) ->
-        if (emailError)
-          console.log("Error occured generating notification email to LM.")
-          console.log(emailError.message)
-
-      # Notify the user the email was successful.
-      req.flash "success", "Your nomination was successfully submitted."
-      res.redirect "/"
-    else
-      res.render 'nomination', buildRendererParams(req, {
-        nomination: new_nomination,
-        validations: saveErr.errors
-      })
+          res.render 'nomination', buildRendererParams(req, {
+            nomination: new_nomination,
+            validations: saveErr.errors
+          })
+    error: (xhrreq, status, errorThrown) ->
+      console.error("ReCAPTCHA request errored: " + status)
+      req.flash('error', "The ReCAPTCHA service responded with error: " + status + " " + errorThrown)
+      res.render 'nomination', buildRendererParams req,
+        nomination: new_nomination
