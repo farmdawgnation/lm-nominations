@@ -22,6 +22,18 @@ buildRendererParams = (req, additionalParamsObject) ->
 
   returnObject
 
+plaintextRecaptchaError = (error) ->
+  if error == "invalid-site-private-key"
+    "ReCAPTCHA failed due to invalid private key. Please contact the site admins."
+  else if error == "invalid-request-cookie"
+    "Something went bad with the ReCAPTCHA challenge. Please try again."
+  else if error == "incorrect-captcha-sol"
+    "Your CAPTCHA solution was incorrect."
+  else if error == "recaptcha-not-reachable"
+    "We couldn't verify your CAPTCHA response because ReCAPTCHA appears to be offline."
+  else
+    "The ReCAPTCHA failed for some unknown reason: " + error
+
 # GET /
 exports.index = (req, res) ->
   res.render 'nomination', buildRendererParams(req, {})
@@ -49,6 +61,15 @@ exports.submit = (req, res) ->
       response: req.body.recaptcha_response_field
     }
     success: (data) ->
+      dataParts = data.split("\n")
+
+      if dataParts[0] == "false"
+        req.flash('error', plaintextRecaptchaError(dataParts[1]))
+        res.render 'nomination', buildRendererParams req,
+          nomination: new_nomination
+
+        return
+
       # Attempt to save the nomination object in the DB.
       new_nomination.save (saveErr) ->
         unless saveErr
