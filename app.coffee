@@ -30,5 +30,10 @@ app.configure 'production', () ->
 app.get '/', routes.index
 app.post '/submit', routes.submit
 
+# Ensure the AWS keys are specified
+if ! process.env.AWS_ACCESSKEY || process.env.AWS_ACCESSKEY == "ACCESSKEYGOESHERE" || ! process.env.AWS_SECRETKEY || process.env.AWS_SECRETKEY == "SECRETKEYGOESHERE"
+  console.error "AWS keys have not been properly defined. Please define the keys in run.sh and restart."
+  process.exit(1)
+
 app.listen 3000
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
