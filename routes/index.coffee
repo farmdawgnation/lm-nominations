@@ -117,9 +117,11 @@ exports.submit = (req, res) ->
           req.flash "success", "Your nomination was successfully submitted."
           res.redirect "/"
         else
+          req.flash "error", "Something went wrong: " + saveErr.message unless saveErr.errors
+
           res.render 'nomination', buildRendererParams(req, {
-            nomination: new_nomination,
-            validations: saveErr.errors
+            nomination: req.body.nomination,
+            validations: saveErr.errors || {}
           })
     error: (xhrreq, status, errorThrown) ->
       console.error("ReCAPTCHA request errored: " + status)
