@@ -12,17 +12,17 @@ Nomination = new Schema({
     email: {type: String, validate: [/^W+/, "Nominee email is required."]},
     street_address: {type: String, validate: [/^\W+/, "Nominee street address is required."]},
     city: {type: String, validate: [/^W+/, "Nominee city is required."]},
-    zip: Number
+    zip: {type: String, validate: [/^\d\d\d\d\d$/, "ZIP code must be five digits."]}
   },
   nominator: {
     name: {type: String, validate: [/^\W/, "Nominator name is required."]},
     organization: {type: String, validate: [/^\W/, "Nominator organization is required."]},
     email: {type: String, validate: [/^\W/, "Nominator email is required."]},
-    phone: Number
+    phone: {type: String, validate: [/^\W/, "Nominator phone number is required."]}
   },
-  nomination_reason: String,
-  good_leader_reason: String,
-  num_years_known: String,
+  nomination_reason: {type: String, validate: [/^\W/, "Nomination reason is required."]},
+  good_leader_reason: {type: String, validate: [/^\W/, "The reason the nominee is a good leader is required."]},
+  num_years_known: {type: String, validate: [/^\W/, "The number of years you have known the nominee is required."]},
   personally_observed_leadership: Boolean,
   leadership_skills_observed: String,
   nominee_notified: Boolean

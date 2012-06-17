@@ -154,8 +154,8 @@
       <label class="control-label" for="personally_observed_leadership">I have personally observed this nominee's leadership skills.</label>
       <div class="controls">
         <select name="nomination[personally_observed_leadership]">
-          <option value="yes" {{if nomination.personally_observed_leadership == "yes"}}selected="selected"{{/if}}>Yes</option>
-          <option value="no" {{if nomination.personally_observed_leadership == "no"}}selected="selected"{{/if}}>No</option>
+          <option value="true" {{if nomination.personally_observed_leadership == true}}selected="selected"{{/if}}>Yes</option>
+          <option value="false" {{if nomination.personally_observed_leadership == false}}selected="selected"{{/if}}>No</option>
         </select>
       </div>
     </div>
@@ -171,8 +171,8 @@
       <label class="control-label" for="nominee_notified">I have notified the nominee about their nomination.</label>
       <div class="controls">
         <select name="nomination[nominee_notified]">
-          <option value="yes" {{if nomination.nominee_notified == "yes"}}selected="selected"{{/if}}>Yes</option>
-          <option value="no" {{if nomination.nominee_notified == "no"}}selected="selected"{{/if}}>No</option>
+          <option value="true" {{if nomination.nominee_notified == true}}selected="selected"{{/if}}>Yes</option>
+          <option value="false" {{if nomination.nominee_notified == false}}selected="selected"{{/if}}>No</option>
         </select>
       </div>
     </div>
