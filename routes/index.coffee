@@ -18,7 +18,7 @@ buildRendererParams = (req, additionalParamsObject) ->
     validations: {}
   }
 
-  returnObject[key] = value for value, key in additionalParamsObject
+  returnObject[key] = value for key, value of additionalParamsObject
 
   returnObject
 
