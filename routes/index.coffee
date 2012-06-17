@@ -48,6 +48,7 @@ exports.submit = (req, res) ->
       return new XMLHttpRequest
 
   # Create the Nomination object from the input.
+  req.body.nomination.ip_address = req.headers['X-Real-IP'] || "127.0.0.1"
   new_nomination = new Nomination req.body.nomination
 
   $.ajax
