@@ -35,5 +35,5 @@ if ! process.env.AWS_ACCESSKEY || process.env.AWS_ACCESSKEY == "ACCESSKEYGOESHER
   console.error "AWS keys have not been properly defined. Please define the keys in run.sh and restart."
   process.exit(1)
 
-app.listen(process.env.PORT || 3000)
+app.listen(9501)
 console.log "Express server listening on port %d in %s mode", app.address().port, app.settings.env
