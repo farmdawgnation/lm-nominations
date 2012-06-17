@@ -111,8 +111,7 @@ exports.submit = (req, res) ->
             text: "A new nomination has been recorded in the database for " + nominee + ". This person was nominated by " + nominator + "."
           }, (emailError) ->
             if (emailError)
-              console.log("Error occured generating notification email to LM.")
-              console.log(emailError.message)
+              console.log("An error occured generated LM email: " + emailError)
 
           # Notify the user the email was successful.
           req.flash "success", "Your nomination was successfully submitted."
