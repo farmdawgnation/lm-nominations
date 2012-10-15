@@ -21,6 +21,6 @@ this project.
 
 My name is Matt Farmer. I'm a Software Engineer based in Atlanta, GA. Although I occasionally dabble in
 Node.js, Scala and Lift have become my latest passion. I've worked in a consultant capacity for several
-years, worked to innovate in the social learning space with [OpenStudy](http://openstudy.com) and am
+years, worked to innovate in the social learning space with [OpenStudy](http://openstudy.com), and am
 currently working on a side project called [Anchor Tab](http://anchortab.com). You can follow my ramblings
 about technology, Atlanta, and life on [my Twitter](http://twitter.com/farmdawgnation).
