@@ -106,7 +106,7 @@ exports.submit = (req, res) ->
           # of the new nomination.
           emailTransport.sendMail {
             from: 'Leadership Macon <nominations@leadershipmacon.org>',
-            to: 'Lynn Farmer <lfarmer@maconchamber.com>, Lynn Farmer <lynnfarmer4@gmail.com>, Matt Farmer <matt@frmr.me>',
+            to: 'Lynn Farmer <lfarmer@maconchamber.com>, Matt Farmer <matt@frmr.me>',
             subject: 'New Nomination: ' + nominee,
             text: "A new nomination has been recorded in the database for " + nominee + ". This person was nominated by " + nominator + "."
           }, (emailError) ->
