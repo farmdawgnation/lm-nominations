@@ -3,7 +3,8 @@
 This webapp is a Node.js/Express app I developed for [Leadership Macon](http://leadershipmacon.org) to
 collect online nominations. I had previously done a much more sophisticated system in PHP that was
 beginning to show its age, and they needed a quick turn-around on implementing a replacement that could
-handle their online nominations.
+handle their online nominations. Since this was primarily a stopgap measure, Leadership Macon agreed to
+allow me to open source the end result after their nominations had concluded.
 
 This app is constructed with the Express framework, using Mongoose as a pipeline to the Mongo datastore.
 Additionally, Twitter Bootstrap has been used to provide some simple look-n-feel elements. I'm no
