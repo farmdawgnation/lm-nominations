@@ -18,6 +18,13 @@ This code is released under the terms of the Apache 2 Licesne without any warran
 implied. For more information on your rights under the license, please see the LICENSE file in the root of
 this project.
 
+## Running the App
+
+This app requires Node.js, CoffeeScript, and Compass.
+
+To run the app, you'll need to compile the stylesheets using `compass compile`, then run `coffee app.coffee`
+to start the app up.
+
 ## Who's behind this?
 
 My name is Matt Farmer. I'm a Software Engineer based in Atlanta, GA. Although I occasionally dabble in
