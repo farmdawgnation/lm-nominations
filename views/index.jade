@@ -4,19 +4,34 @@ mixin text-field(id, name)
   div.control-group
     label.control-label(for="#{id}") #{name}
     div.controls
-      input.input-xxlarge(id="#{id}", type="text")
+      input.input-xxlarge(id="#{id}", name="#{id}", type="text")
 
 mixin small-text-field(id, name)
   div.control-group
     label.control-label(for="#{id}") #{name}
     div.controls
-      input.input-small(id="#{id}", type="text")
+      input.input-small(id="#{id}", name="#{id}", type="text")
+
+mixin yes-no-field(id, name)
+  div.control-group
+    label.control-label(for="#{id}") #{name}
+    div.controls
+      select(id="#{id}", name="#{id}")
+        option(value="")
+        option(value="true") Yes
+        option(value="false") No
 
 block content
   h1 Leadership Macon Nomination Form 2014
   p 
     | Below is the Leadership Macon Nomination form for the class of 2014.
-    | Please double-check your responses before submitting the form.
+    | Please double-check your responses before submitting the form. Errors
+    | or omissions could result in difficulty locating and notifying the nominee
+    | of the next steps in the application process for Leadership Macon.
+
+  :markdown
+    If you have any questions we encourage you to check out the
+    [Leadership Macon homepage](http://leadershipmacon.org) for more information.
 
   form(action="/submit", method="post")
     fieldset
@@ -25,7 +40,7 @@ block content
       div.control-group
         label.control-label(for="nominee-salutation") Salutation
         div.controls
-          select#nominee-salutation
+          select#nominee-salutation(name="nominee-salutation")
             option(value="mr") Mr.
             option(value="ms") Ms.
             option(value="mrs") Mrs.
@@ -41,3 +56,24 @@ block content
       +text-field("nominee-city", "City")
       +small-text-field("nominee-state", "State")
       +small-text-field("nominee-zip", "ZIP")
+
+    fieldset
+      legend Your Contact Information
+
+      +text-field("nominator-first-name", "First Name")
+      +text-field("nominator-last-name", "Last Name")
+      +text-field("nominator-organization", "Organization")
+      +text-field("nominator-email", "Email")
+      +text-field("nominator-phone", "Phone Number")
+
+    fieldset
+      legend Nominee Details
+
+      +text-field("details-nomination-reason", "I am nominating this person because:")
+      +text-field("details-good-leader", "This person will be a good leader because:")
+      +text-field("details-years-known", "How many years have you known this person?")
+      +yes-no-field("details-personally-observed-leadership", "I have personally observed their leadership skills.")
+      +text-field("details-leadership-skills", "If yes above, specify what leadership skills you've observed:")
+      +yes-no-field("details-notified-nominee", "I have notified the nominee about their nomination.")
+
+    button.btn.btn-primary Submit Nomination
