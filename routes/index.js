@@ -1,7 +1,7 @@
 exports.build = function(app) {
   var mongodb = require('mongodb'),
       MongoClient = mongodb.MongoClient,
-      mongoUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/lmnominations-dev";
+      mongoUrl = process.env.MONGOHQ_URL || "mongodb://127.0.0.1:27017/lmnominations-dev";
 
   /**
    * Homepage.
