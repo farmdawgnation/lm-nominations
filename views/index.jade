@@ -1,0 +1,43 @@
+extends layout
+
+mixin text-field(id, name)
+  div.control-group
+    label.control-label(for="#{id}") #{name}
+    div.controls
+      input.input-xxlarge(id="#{id}", type="text")
+
+mixin small-text-field(id, name)
+  div.control-group
+    label.control-label(for="#{id}") #{name}
+    div.controls
+      input.input-small(id="#{id}", type="text")
+
+block content
+  h1 Leadership Macon Nomination Form 2014
+  p 
+    | Below is the Leadership Macon Nomination form for the class of 2014.
+    | Please double-check your responses before submitting the form.
+
+  form(action="/submit", method="post")
+    fieldset
+      legend Nominee Contact Information
+
+      div.control-group
+        label.control-label(for="nominee-salutation") Salutation
+        div.controls
+          select#nominee-salutation
+            option(value="mr") Mr.
+            option(value="ms") Ms.
+            option(value="mrs") Mrs.
+
+      +text-field("nominee-first-name", "First Name")
+      +text-field("nominee-middle-name", "Middle Name")
+      +text-field("nominee-last-name", "Last Name")
+      +small-text-field("nominee-suffix", "Suffix")
+
+      +text-field("nominee-organization", "Organization")
+      +text-field("nominee-email", "Email")
+      +text-field("nominee-street-address", "Street Address")
+      +text-field("nominee-city", "City")
+      +small-text-field("nominee-state", "State")
+      +small-text-field("nominee-zip", "ZIP")
