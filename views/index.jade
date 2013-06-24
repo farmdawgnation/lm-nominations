@@ -6,17 +6,29 @@ mixin text-field(id, name)
     div.controls
       input.input-xxlarge(id="#{id}", name="#{id}", type="text")
 
+mixin required-text-field(id, name)
+  div.control-group
+    label.required.control-label(for="#{id}") #{name}
+    div.controls
+      input.input-xxlarge(id="#{id}", name="#{id}", type="text", required="required")
+
 mixin small-text-field(id, name)
   div.control-group
     label.control-label(for="#{id}") #{name}
     div.controls
       input.input-small(id="#{id}", name="#{id}", type="text")
 
+mixin required-small-text-field(id, name)
+  div.control-group
+    label.required.control-label(for="#{id}") #{name}
+    div.controls
+      input.input-small(id="#{id}", name="#{id}", type="text", required="required")
+
 mixin yes-no-field(id, name)
   div.control-group
-    label.control-label(for="#{id}") #{name}
+    label.required.control-label(for="#{id}") #{name}
     div.controls
-      select(id="#{id}", name="#{id}")
+      select(id="#{id}", name="#{id}", required="required")
         option(value="")
         option(value="true") Yes
         option(value="false") No
@@ -27,7 +39,9 @@ block content
     | Below is the Leadership Macon Nomination form for the class of 2014.
     | Please double-check your responses before submitting the form. Errors
     | or omissions could result in difficulty locating and notifying the nominee
-    | of the next steps in the application process for Leadership Macon.
+    | of the next steps in the application process for Leadership Macon. Required
+    | fields have a red asterisk by their label, and turn red when they're highlighted
+    | without having a value in them.
 
   :markdown
     If you have any questions we encourage you to check out the
@@ -38,40 +52,41 @@ block content
       legend Nominee Contact Information
 
       div.control-group
-        label.control-label(for="nominee-salutation") Salutation
+        label.required.control-label(for="nominee-salutation") Salutation
         div.controls
-          select#nominee-salutation(name="nominee-salutation")
+          select#nominee-salutation(name="nominee-salutation", required="required")
+            option(value="")
             option(value="mr") Mr.
             option(value="ms") Ms.
             option(value="mrs") Mrs.
 
-      +text-field("nominee-first-name", "First Name")
+      +required-text-field("nominee-first-name", "First Name")
       +text-field("nominee-middle-name", "Middle Name")
-      +text-field("nominee-last-name", "Last Name")
+      +required-text-field("nominee-last-name", "Last Name")
       +small-text-field("nominee-suffix", "Suffix")
 
-      +text-field("nominee-organization", "Organization")
-      +text-field("nominee-email", "Email")
-      +text-field("nominee-street-address", "Street Address")
-      +text-field("nominee-city", "City")
-      +small-text-field("nominee-state", "State")
-      +small-text-field("nominee-zip", "ZIP")
+      +required-text-field("nominee-organization", "Organization")
+      +required-text-field("nominee-email", "Email")
+      +required-text-field("nominee-street-address", "Street Address")
+      +required-text-field("nominee-city", "City")
+      +required-small-text-field("nominee-state", "State")
+      +required-small-text-field("nominee-zip", "ZIP")
 
     fieldset
       legend Your Contact Information
 
-      +text-field("nominator-first-name", "First Name")
-      +text-field("nominator-last-name", "Last Name")
-      +text-field("nominator-organization", "Organization")
-      +text-field("nominator-email", "Email")
-      +text-field("nominator-phone", "Phone Number")
+      +required-text-field("nominator-first-name", "First Name")
+      +required-text-field("nominator-last-name", "Last Name")
+      +required-text-field("nominator-organization", "Organization")
+      +required-text-field("nominator-email", "Email")
+      +required-text-field("nominator-phone", "Phone Number")
 
     fieldset
       legend Nominee Details
 
-      +text-field("details-nomination-reason", "I am nominating this person because:")
-      +text-field("details-good-leader", "This person will be a good leader because:")
-      +text-field("details-years-known", "How many years have you known this person?")
+      +required-text-field("details-nomination-reason", "I am nominating this person because:")
+      +required-text-field("details-good-leader", "This person will be a good leader because:")
+      +required-text-field("details-years-known", "How many years have you known this person?")
       +yes-no-field("details-personally-observed-leadership", "I have personally observed their leadership skills.")
       +text-field("details-leadership-skills", "If yes above, specify what leadership skills you've observed:")
       +yes-no-field("details-notified-nominee", "I have notified the nominee about their nomination.")

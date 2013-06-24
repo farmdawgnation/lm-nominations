@@ -19,7 +19,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
+app.use(express.cookieParser('l3ad3rsHipr0x0rzmyb0x0rz'));
 app.use(express.session());
 app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
