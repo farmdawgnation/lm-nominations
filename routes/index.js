@@ -22,9 +22,12 @@ exports.build = function(app) {
 
       db.collection("nominations").insert(req.body, function(err, docs) {
         db.close();
-        res.send(200);
 
         if (err) throw err;
+
+        res.render("thanks", {
+          title: "Thank you!"
+        });
       });
     });
   }
@@ -35,5 +38,5 @@ exports.build = function(app) {
 
   // Build routes.
   app.get("/", index);
-  app.post("/submit", submit);
+  app.post("/", submit);
 }
