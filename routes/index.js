@@ -27,6 +27,8 @@ exports.build = function(app) {
         message: {
           html: html,
           subject: "New Nomination for LM 2014",
+          from_email: "noreply@leadershipmacon.org",
+          from_name: "Leadership Macon",
           to: [
             {
               email: nominationInfoTargetEmail,
@@ -51,6 +53,8 @@ exports.build = function(app) {
         message: {
           html: html,
           subject: "Thank you for your Nomination!",
+          from_email: "noreply@leadershipmacon.org",
+          from_name: "Leadership Macon",
           to: [
             {
               email: to,
