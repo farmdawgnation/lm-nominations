@@ -1,0 +1,11 @@
+doctype 5
+html
+  body
+    p
+      | A new nomination has been added to the list of nomination for the
+      | Leadership Macon Class of 2014. Here's the information provided
+      | in the nomination.
+
+    ul
+      each val, field in nominationFields
+        li #{field}: #{val}
