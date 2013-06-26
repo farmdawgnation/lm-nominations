@@ -27,9 +27,6 @@ app.use(app.router);
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Build routes.
-routes.build(app);
-
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -47,6 +44,9 @@ if ('production' == app.get('env')) {
       callback("Invalid username or password.", false);
   }));
 }
+
+// Build routes.
+routes.build(app);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
