@@ -11,6 +11,8 @@
     "stylus": "*",
     "marked": "0.2.9",
     "mongodb": "1.3.10",
-    "mandrill-api": ">=1.0.2"
+    "mandrill-api": ">=1.0.2",
+    "bcrypt": "0.7.6",
+    "express-csv": "0.6.0"
   }
 }

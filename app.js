@@ -4,17 +4,19 @@
  */
 
 var express = require('express')
+  , csv = require('express-csv')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , bcrypt = require('bcrypt');
 
-var app = express();
+var app = module.exports = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.set('export authenticator', function(req, res, callback) { callback(); });
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -31,6 +33,19 @@ routes.build(app);
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+}
+
+// production only
+if ('production' == app.get('env')) {
+  app.set('export authenticator', express.basicAuth(function(user, pass, callback) {
+    var authSuccess =
+      (user == process.env.EXPORT_USERNAME && bcrypt.compareSync(pass, process.env.EXPORT_PASSWORD));
+
+    if (authSuccess)
+      callback(null, true);
+    else
+      callback("Invalid username or password.", false);
+  }));
 }
 
 http.createServer(app).listen(app.get('port'), function(){
