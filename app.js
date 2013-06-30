@@ -18,7 +18,6 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('export authenticator', function(req, res, callback) { callback(); });
 app.use(express.favicon());
-app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('l3ad3rsHipr0x0rzmyb0x0rz'));
@@ -30,10 +29,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
+  app.use(express.logger('dev'));
 }
 
 // production only
 if ('production' == app.get('env')) {
+  app.user(express.logger('default'));
+
   app.set('export authenticator', express.basicAuth(function(user, pass, callback) {
     var authSuccess =
       (user == process.env.EXPORT_USERNAME && bcrypt.compareSync(pass, process.env.EXPORT_PASSWORD));
