@@ -34,7 +34,7 @@ if ('development' == app.get('env')) {
 
 // production only
 if ('production' == app.get('env')) {
-  app.user(express.logger('default'));
+  app.use(express.logger('default'));
 
   app.set('export authenticator', express.basicAuth(function(user, pass, callback) {
     var authSuccess =
