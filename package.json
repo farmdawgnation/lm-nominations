@@ -14,5 +14,8 @@
     "mandrill-api": ">=1.0.2",
     "bcrypt": "0.7.6",
     "express-csv": "0.6.0"
+  },
+  "engines": {
+      "node": "0.10.21"
   }
 }
