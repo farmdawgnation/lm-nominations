@@ -72,6 +72,38 @@ exports.build = function(app) {
    * MongoDB database.
   **/
   function submit(req, res) {
+    var allowedKeys = [
+      "nominee-salutation",
+      "nominee-first-name",
+      "nominee-middle-name",
+      "nominee-last-name",
+      "nominee-suffix",
+      "nominee-organization",
+      "nominee-email",
+      "nominee-street-address",
+      "nominee-city",
+      "nominee-state",
+      "nominee-zip",
+      "nominator-first-name",
+      "nominator-last-name",
+      "nominator-organization",
+      "nominator-email",
+      "nominator-phone",
+      "details-nomination-reason",
+      "details-good-leader",
+      "details-years-known",
+      "details-personally-observed-leadership",
+      "details-leadership-skills",
+      "details-notified-nominee"
+    ];
+
+    Object.keys(req.body).forEach(function(key) {
+      if (allowedKeys.indexOf(key) == -1) {
+        console.log("Throwing away key " + key + " from submission.");
+        delete req.body[key];
+      }
+    });
+
     MongoClient.connect(mongoUrl, function(err, db) {
       if (err) throw err;
 
