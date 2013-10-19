@@ -16,6 +16,6 @@
     "express-csv": "0.6.0"
   },
   "engines": {
-      "node": "0.10.21"
+      "node": "0.10.x"
   }
 }
