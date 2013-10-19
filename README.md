@@ -14,7 +14,7 @@ The app is pretty barebones, but it gets the job done. Specifically, it will:
 
 ## Using the App
 
-To use this application, you'll need [CoffeeScript](http://coffeescript.org), a [MongoDB](http://mongodb.org) instance, and a [Mandrill](http://mandrill.com) account.
+To use this application, you'll need a [MongoDB](http://mongodb.org) instance, and a [Mandrill](http://mandrill.com) account.
 
 The application is designed to be deployed on Heroku. But you can run it on a server of your choosing with the correct configuration or locally for development. The following settings from the environment are understood for configuration purposes:
 
@@ -29,7 +29,7 @@ The application is designed to be deployed on Heroku. But you can run it on a se
 To start the application, you should just be able to run:
 
 ```
-$ coffee app.coffee
+$ node app.js
 ```
 
 ... and be off to the races.
