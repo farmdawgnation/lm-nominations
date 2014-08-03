@@ -22,7 +22,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.set('export authenticator', function(req, res, callback) { callback(); });
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('stylus').middleware(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
