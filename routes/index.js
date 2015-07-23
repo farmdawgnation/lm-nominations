@@ -12,7 +12,7 @@ exports.build = function(app) {
   **/
   function index(req, res){
     res.render("index", {
-      title: "Leadership Macon 2015 Nomination Form"
+      title: "Leadership Macon 2016 Nomination Form"
     });
   }
 
@@ -27,7 +27,7 @@ exports.build = function(app) {
       mandrillApi.messages.send({
         message: {
           html: html,
-          subject: "New Nomination for LM 2015",
+          subject: "New Nomination for LM 2016",
           from_email: "noreply@leadershipmacon.org",
           from_name: "Leadership Macon",
           to: [
