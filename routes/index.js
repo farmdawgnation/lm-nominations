@@ -13,7 +13,7 @@ exports.build = function(app) {
   **/
   function index(req, res){
     res.render("index", {
-      title: "Leadership Macon 2016 Nomination Form"
+      title: "Leadership Macon 2017 Nomination Form"
     });
   }
 
