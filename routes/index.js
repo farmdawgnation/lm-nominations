@@ -2,8 +2,9 @@ exports.build = function(app) {
   var mongodb = require('mongodb'),
       MongoClient = mongodb.MongoClient,
       mongoUrl = process.env.MONGOHQ_URL || "mongodb://127.0.0.1:27017/lmnominations-dev",
-      Mandrill = require('mandrill-api').Mandrill,
-      mandrillApi = new Mandrill(),
+      Mailgun = require('mailgun').Mailgun,
+      mailgunApi = new Mailgun(process.env.MAILGUN_API_KEY),
+      mailcomposer = require("mailcomposer"),
       nominationInfoTargetEmail = process.env.NOMINATION_ALERT_EMAIL || "matt+nominfo@frmr.me",
       exportAuth = app.get('export authenticator');
 
@@ -21,48 +22,44 @@ exports.build = function(app) {
       nominationFields: nomination
     };
 
-    app.render("emails/nomination-info", data, function(err, html) {
+    app.render("emails/nomination-info", data, function(err, renderedEmail) {
       if (err) throw err;
 
-      mandrillApi.messages.send({
-        message: {
-          html: html,
-          subject: "New Nomination for LM 2016",
-          from_email: "noreply@leadershipmacon.org",
-          from_name: "Leadership Macon",
-          to: [
-            {
-              email: nominationInfoTargetEmail,
-              name: "Leadership Macon"
-            }
-          ]
-        }
+      let mailOptions = {
+        from: 'Leadership Macon <noreply@leadershipmacon.org>',
+        to: 'Leadership Macon <' + nominationInfoTargetEmail + '>',
+        subject: 'New Nomination for LM 2017',
+        html: renderedEmail
+      };
+
+      mailcomposer(mailOptions).build(function(err, message) {
+        if (err) throw err;
+
+        mailgun.sendRaw('noreply@leadershipmacon.org', nominationInfoTargetEmail, message);
       });
     });
   }
 
-  function sendConfirmationEmail(to, nominatorName, nomineeName) {
+  function sendConfirmationEmail(nominatorEmail, nominatorName, nomineeName) {
     var data = {
       nominatorName: nominatorName,
       nomineeName: nomineeName
     };
 
-    app.render("emails/confirmation", data, function(err, html) {
+    app.render("emails/confirmation", data, function(err, renderedEmail) {
       if (err) throw err;
 
-      mandrillApi.messages.send({
-        message: {
-          html: html,
-          subject: "Thank you for your Nomination!",
-          from_email: "noreply@leadershipmacon.org",
-          from_name: "Leadership Macon",
-          to: [
-            {
-              email: to,
-              name: nominatorName
-            }
-          ]
-        }
+      let mailOptions = {
+        from: 'Leadership Macon <noreply@leadershipmacon.org>',
+        to: nominatorName + ' <' + nominatorEmail + '>',
+        subject: 'Thank you for your nomination!',
+        html: renderedEmail
+      };
+
+      mailcomposer(mailOptions).build(function(err, message) {
+        if (err) throw err;
+
+        mailgun.sendRaw('noreply@leadershipmacon.org', nominationInfoTargetEmail, message);
       });
     });
   }

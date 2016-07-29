@@ -17,7 +17,8 @@
     "basic-auth-connect": "1.0.0",
     "morgan": "1.7.0",
     "body-parser": "1.15.2",
-    "mailgun": "0.5.0"
+    "mailgun": "0.5.0",
+    "mailcomposer": "3.10.0"
   },
   "engines": {
       "node": "6.3.x"
