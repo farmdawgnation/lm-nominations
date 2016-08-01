@@ -35,7 +35,7 @@ exports.build = function(app) {
       mailcomposer(mailOptions).build(function(err, message) {
         if (err) throw err;
 
-        mailgun.sendRaw('noreply@leadershipmacon.org', nominationInfoTargetEmail, message);
+        mailgunApi.sendRaw('noreply@leadershipmacon.org', nominationInfoTargetEmail, message);
       });
     });
   }
@@ -59,7 +59,7 @@ exports.build = function(app) {
       mailcomposer(mailOptions).build(function(err, message) {
         if (err) throw err;
 
-        mailgun.sendRaw('noreply@leadershipmacon.org', nominationInfoTargetEmail, message);
+        mailgunApi.sendRaw('noreply@leadershipmacon.org', nominatorEmail, message);
       });
     });
   }
