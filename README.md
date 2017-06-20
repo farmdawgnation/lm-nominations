@@ -1,5 +1,7 @@
 # Leadership Macon Nomination Form
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/farmdawgnation/lm-nominations.svg)](https://greenkeeper.io/)
+
 Welcome to the GitHub homepage for the Leadership Macon Nomination form. This is a simple Node.js application developed to collect nominations and record them in a MongoDB database for later retrieval. It was developed on contract with Leadership Macon and released as Open Source software with their permission.
 
 This app lives in production at [nominate.leadershipmacon.org](http://nominate.leadershipmacon.org) and is hosted at Heroku. It uses Mandrill for notification email delivery, and MongoDB for data persistence.
