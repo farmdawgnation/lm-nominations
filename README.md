@@ -21,9 +21,8 @@ The application is designed to be deployed on Heroku. But you can run it on a se
 * **NODE_ENV** - The application environment. When set to "production," a different log format will be used and export will be HTTP basic auth protected.
 * **EXPORT_USERNAME** - In production, this is the username you're required to provide on the authentication screen for export.
 * **EXPORT_PASSWORD** - In production, this is a BCrypt-encrypted version of the password you're required to provide on the authentication screen for export.
-* **MANDRILL_APIKEY** - This is the API key of the Mandrill account the app should use for email delivery.
-* **MANDRILL_USERNAME** - The username of the Mandrill account the app should use for email delivery.
-* **MONGOHQ_URL** - The Mongo URL of the MongoDB instance the app should connect to. (We use MongoHQ on Heroku, hence the name.) Without this specified, the app will attempt to connect to a locally running Mongo instance.
+* **MAILGUN_APIKEY** - This is the API key of the Mailgun account the app should use for email delivery.
+* **MONGO_URL** - The Mongo URL of the MongoDB instance the app should connect to. Without this specified, the app will attempt to connect to a locally running Mongo instance.
 * **NOMINATION_ALERT_EMAIL** - The email that nomination data should be sent to as it flows in.
 
 To start the application, you should just be able to run:
