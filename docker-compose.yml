@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+  lm-mongodb:
+    image: mongo:4.0.0
+    ports:
+      - '127.0.0.1:27017:27017'
