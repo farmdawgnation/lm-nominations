@@ -1,4 +1,4 @@
-FROM node:6.11.1
+FROM node:8.11.3-stretch
 
 ADD . /opt/lm-nominations
 
