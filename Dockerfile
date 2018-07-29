@@ -10,6 +10,8 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 
 RUN chmod +x /usr/local/bin/dumb-init
 
+USER nobody
+
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 
 CMD ["node", "app.js"]
