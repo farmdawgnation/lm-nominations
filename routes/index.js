@@ -1,7 +1,8 @@
 exports.build = function(app) {
   var mongodb = require('mongodb'),
       MongoClient = mongodb.MongoClient,
-      mongoUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/lmnominations-dev",
+      mongoUrl = process.env.MONGO_URL || "mongodb://127.0.0.1:27017",
+      mongoDb = process.env.MONGO_DB || "lmnominations-dev",
       Mailgun = require('mailgun').Mailgun,
       mailgunApi = new Mailgun(process.env.MAILGUN_API_KEY),
       mailcomposer = require("mailcomposer"),
@@ -101,11 +102,11 @@ exports.build = function(app) {
       }
     });
 
-    MongoClient.connect(mongoUrl, function(err, db) {
+    MongoClient.connect(mongoUrl, function(err, client) {
       if (err) throw err;
 
-      db.collection("nominations").insert(req.body, function(err, docs) {
-        db.close();
+      client.db(mongoDb).collection("nominations").insert(req.body, function(err, docs) {
+        client.close();
 
         if (err) throw err;
 
@@ -130,10 +131,10 @@ exports.build = function(app) {
     var nominations = [];
     var keys = [];
 
-    MongoClient.connect(mongoUrl, function(err, db) {
+    MongoClient.connect(mongoUrl, function(err, client) {
       if (err) throw err;
 
-      var stream = db.collection("nominations").find().stream();
+      var stream = client.db(mongoDb).collection("nominations").find().stream();
 
       stream.on('data', function(item) {
         // We're not guaranteed all keys will exist in all nominations
@@ -163,7 +164,7 @@ exports.build = function(app) {
         });
 
         res.csv(resultSet);
-        db.close();
+        client.close();
       });
     });
   }
