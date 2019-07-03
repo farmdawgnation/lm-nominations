@@ -19,7 +19,7 @@ var app = module.exports = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 app.set('export authenticator', function(req, res, callback) { callback(); });
 
 app.use(bodyParser.urlencoded({ extended: true }));
