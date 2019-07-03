@@ -18,6 +18,12 @@ exports.build = function(app) {
     });
   }
 
+  function thanks(req, res) {
+    res.render("thanks", {
+      title: "Thank you for your nomination"
+    });
+  }
+
   function sendNominationInfoEmail(nomination) {
     var data = {
       nominationFields: nomination
@@ -117,9 +123,7 @@ exports.build = function(app) {
           req.body["nominee-first-name"] + " " + req.body["nominee-last-name"]
         );
 
-        res.render("thanks", {
-          title: "Thank you!"
-        });
+        res.redirect('/thanks');
       });
     });
   }
@@ -176,5 +180,6 @@ exports.build = function(app) {
   // Build routes.
   app.get("/", index);
   app.post("/", submit);
+  app.get("/thanks", thanks);
   app.get("/export", exportAuth, exportNominations);
 }
