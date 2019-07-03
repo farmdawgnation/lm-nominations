@@ -2,33 +2,33 @@ extends layout
 
 mixin text-field(id, name)
   div.control-group
-    label.control-label(for="#{id}") #{name}
+    label.control-label(for=id) #{name}
     div.controls
-      input.input-xxlarge(id="#{id}", name="#{id}", type="text")
+      input.input-xxlarge(id=id, name=id, type="text")
 
 mixin required-text-field(id, name)
   div.control-group
-    label.required.control-label(for="#{id}") #{name}
+    label.required.control-label(for=id) #{name}
     div.controls
-      input.input-xxlarge(id="#{id}", name="#{id}", type="text", required="required")
+      input.input-xxlarge(id=id, name=id, type="text", required="required")
 
 mixin small-text-field(id, name)
   div.control-group
-    label.control-label(for="#{id}") #{name}
+    label.control-label(for=id) #{name}
     div.controls
-      input.input-small(id="#{id}", name="#{id}", type="text")
+      input.input-small(id=id, name=id, type="text")
 
 mixin required-small-text-field(id, name)
   div.control-group
-    label.required.control-label(for="#{id}") #{name}
+    label.required.control-label(for=id) #{name}
     div.controls
-      input.input-small(id="#{id}", name="#{id}", type="text", required="required")
+      input.input-small(id=id, name=id, type="text", required="required")
 
 mixin yes-no-field(id, name)
   div.control-group
-    label.required.control-label(for="#{id}") #{name}
+    label.required.control-label(for=id) #{name}
     div.controls
-      select(id="#{id}", name="#{id}", required="required")
+      select(id=id, name=id, required="required")
         option(value="")
         option(value="true") Yes
         option(value="false") No
