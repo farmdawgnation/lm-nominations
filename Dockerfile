@@ -1,4 +1,4 @@
-FROM node:10.16.0-slim
+FROM node:14.17.3-slim
 
 ADD . /opt/lm-nominations
 
