@@ -15,9 +15,9 @@
     "pug": "3.0.1",
     "mailcomposer": "4.0.2",
     "mailgun": "0.5.0",
-    "mongodb": "3.1.13",
+    "mongodb": "4.0.0",
     "morgan": "^1.9.1",
-    "stylus": "0.54.5"
+    "stylus": "0.54.8"
   },
   "engines": {
     "node": "10.x"
