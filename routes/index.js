@@ -111,7 +111,7 @@ exports.build = function(app) {
     MongoClient.connect(mongoUrl, function(err, client) {
       if (err) throw err;
 
-      client.db(mongoDb).collection("nominations").insert(req.body, function(err, docs) {
+      client.db(mongoDb).collection("nominations").insertOne(req.body, function(err, docs) {
         client.close();
 
         if (err) throw err;
