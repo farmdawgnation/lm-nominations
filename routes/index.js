@@ -14,7 +14,7 @@ exports.build = function(app) {
   **/
   function index(req, res){
     res.render("index", {
-      title: "Leadership Macon 2020 Nomination Form"
+      title: "Leadership Macon 2022 Nomination Form"
     });
   }
 
@@ -35,7 +35,7 @@ exports.build = function(app) {
       let mailOptions = {
         from: 'Leadership Macon <noreply@leadershipmacon.org>',
         to: 'Leadership Macon <' + nominationInfoTargetEmail + '>',
-        subject: 'New Nomination for LM 2020',
+        subject: 'New Nomination for LM 2022',
         html: renderedEmail
       };
 
